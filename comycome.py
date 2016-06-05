@@ -27,7 +27,7 @@ if not os.path.isdir(root_path):
 # 途中で作業ディレクトリを変えるので，最初に現在のディレクトリを記憶
 start_cwd = os.getcwd()
 
-# 一個一個のexample_aaa_bbb.chi（のうちのCの列）のデータとか保存するやつ
+# 一個一個のSumaC12_1c_XXX_YYYYY.chi（のうちのCの列）のデータとかを保存するやつ
 class Example:
     def __init__(self, filename): #filenameを受け取る
         self.c_column = []
@@ -67,7 +67,8 @@ class Example:
             self.c_column.append(element) # 実際の格納処理
         return
 
-# フォルダ中の全exampleデータを読み込み
+
+# フォルダ中の全データを読み込み
 examples = []
 os.chdir(root_path)
 re_chi = re.compile("SumaC12_1c_[0-9]+_[0-9]+.chi")
