@@ -56,7 +56,7 @@ examples = sorted(examples, key=lambda e:e.data_num)
 max_row = max([len(e.c_column) for e in examples])
 
 # エラーチェック
-if do_error_check:　#do_error_check = fals にしたら実行されない
+if do_error_check: #do_error_check = fals にしたら実行されない
     isError = False
     if len(examples) == 0:
         print("実験データが見つからない")
