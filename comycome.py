@@ -32,24 +32,39 @@ class Example:
     def __init__(self, filename): #filenameを受け取る
         self.c_column = []
         self.filename = filename
-        for line in open(filename):
-            linedata = line.strip().split(" ")#""で分割
-            element = "" # Cの列がないときは空白を書き込む
-            if len(linedata) >= 3: # Cの列が存在するときは
-                element = linedata[2] # その値を書き込む
-            self.c_column.append(element)
-        self.setNums() # self.filenameからexample番号とdata番号を取り出す。
+        # ファイルが実際に存在するかチェック
+        if not os.path.isfile(self.filename):
+            print("ファイルが存在しませんでした : " + self.filename)
+            exit(-1)
+        # self.filenameからexample番号とdata番号を取り出す
+        self.setNums()
+        # ファイルからcの列を読み込む
+        self.readingColumnC()
 
     # self.filenameからexample番号とdata番号を取り出す。
     def setNums(self):
+        # foundにはカッコでくくったそれぞれの場所にある文字列がタプルで入る
         found = re.findall("SumaC12_1c_([0-9]+)_([0-9]+).chi", self.filename)[0]
+        # foundにはexample番号とdata番号の二つが入るはずなのでチェック
         if len(found) != 2 or not found[0].isdigit() or not found[1].isdigit():
-            print("変な名前のファイルが見つかりました : " + filename)
+            print("変な名前のファイルが見つかりました : " + self.filename)
             exit(-1)
+        # チェックを無事通ったら自分の中に格納する
         self.ex_num_str = found[0]
         self.ex_num = int(self.ex_num_str)
         self.data_num_str = found[1]
         self.data_num = int(self.data_num_str)
+        return
+
+    # self.filenameファイルからcの列のデータを読み込む
+    def readingColumnC(self):
+        for line in open(filename): # filenameのファイルを各行lineとして読み込み
+            linedata = line.strip().split(" ") # 各行を空白で分割
+            if len(linedata) < 3: # Cの列がないときは
+                element = "" # 空白を入れる
+            if len(linedata) >= 3: # Cの列が存在するときは
+                element = linedata[2] # その値を入れる
+            self.c_column.append(element) # 実際の格納処理
         return
 
 # フォルダ中の全exampleデータを読み込み
