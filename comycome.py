@@ -38,19 +38,19 @@ class Example:
             if len(linedata) >= 3: # Cの列が存在するときは
                 element = linedata[2] # その値を書き込む
             self.c_column.append(element)
-        (self.ex_num_str, self.data_num_str) = self.getNums(self.filename)
-        self.ex_num = int(self.ex_num_str)
-        self.data_num = int(self.data_num_str)
+        self.getNums(self.filename) # filenameからexample番号とdata番号を取り出す。
 
     # filenameからexample番号とdata番号を取り出す。
-    # 返り値はタプルで、0番目の要素がexample番号、1番目の要素がdata番号。
     def getNums(self, filename):
-        re_name = re.compile("SumaC12_1c_([0-9]+)_([0-9]+).chi")
-        output = re_name.findall(filename)[0]
-        if len(output) != 2 or not output[0].isdigit() or not output[1].isdigit():
+        found = re.findall("SumaC12_1c_([0-9]+)_([0-9]+).chi", filename)[0]
+        if len(found) != 2 or not found[0].isdigit() or not found[1].isdigit():
             print("変な名前のファイルが見つかりました : " + filename)
             exit(-1)
-        return output
+        self.ex_num_str = found[0]
+        self.ex_num = int(self.ex_num_str)
+        self.data_num_str = found[1]
+        self.data_num = int(self.data_num_str)
+        return
 
 # フォルダ中の全exampleデータを読み込み
 examples = []
