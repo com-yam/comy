@@ -38,10 +38,10 @@ class Example:
             if len(linedata) >= 3: # Cの列が存在するときは
                 element = linedata[2] # その値を書き込む
             self.c_column.append(element)
-        self.getNums(self.filename) # filenameからexample番号とdata番号を取り出す。
+        self.setNums(self.filename) # filenameからexample番号とdata番号を取り出す。
 
     # filenameからexample番号とdata番号を取り出す。
-    def getNums(self, filename):
+    def setNums(self, filename):
         found = re.findall("SumaC12_1c_([0-9]+)_([0-9]+).chi", filename)[0]
         if len(found) != 2 or not found[0].isdigit() or not found[1].isdigit():
             print("変な名前のファイルが見つかりました : " + filename)
