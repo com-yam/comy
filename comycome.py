@@ -9,14 +9,19 @@ START = 5 # C5
 do_error_check = True
 
 if len(sys.argv) != 2:
-    # print("使い方  =>  $ comy.py dir/path alldata.path output.name")
-    print("使い方  =>  $ comy.py dir/path")
-    print("dir_pathにはexample_aaa_bbb.chiが入ってるディレクトリのパスを渡してください")
+    # print("使い方  =>  $ comy.py root_dir_path template_file.path")
+    print("使い方  =>  $ comy.py root_dir_path")
+    # print("\"root_dir_path\"にはSumaC12_1c_XXXフォルダが入ってるフォルダのパスを渡してください")
+    print("\"root_dir_path\"にはSumaC12_1c_XXXフォルダのパスを渡してください")
     exit(0)
-arg = sys.argv[1]
-if not os.path.isdir(arg):
-    print(arg + "はディレクトリじゃないです")
+root_path = sys.argv[1]
+if not os.path.isdir(root_path):
+    print("\"" + root_path + "\"フォルダが見つかりません")
     exit(-1)
+#template_path = sys.argv[2]
+# if not os.path.isfile(template_path):
+#     print("\"" + template_path + "\"ファイルが見つかりません")
+#     exit(-1)
 
 
 # 途中で作業ディレクトリを変えるので，最初に現在のディレクトリを記憶
@@ -44,7 +49,7 @@ class Example:
 
 # フォルダ中の全exampleデータを読み込み
 examples = []
-os.chdir(arg)
+os.chdir(root_path)
 re_chi = re.compile("SumaC12_1c_[0-9]+_[0-9]+.chi")
 for filename in os.listdir("."):
     if not re_chi.match(filename):
