@@ -27,7 +27,7 @@ if not os.path.isdir(root_path):
 # 途中で作業ディレクトリを変えるので，最初に現在のディレクトリを記憶
 start_cwd = os.getcwd()
 
-# 一個一個のexample_aaa_bbb.chi（のうちのCの列）のデータとか
+# 一個一個のexample_aaa_bbb.chi（のうちのCの列）のデータとか保存するやつ
 class Example:
     def __init__(self, filename): #filenameを受け取る
         self.c_column = []
@@ -38,14 +38,19 @@ class Example:
             if len(linedata) >= 3: # Cの列が存在するときは
                 element = linedata[2] # その値を書き込む
             self.c_column.append(element)
-        splited_filename = os.path.splitext(filename)[0].split("_") # 拡張子外して"_"で分割
-        if len(splited_filename) != 4 or not splited_filename[2].isdigit() or not splited_filename[3].isdigit():
-            print("変な名前のファイル : " + filename)
-            exit(-1)
-        self.ex_num_str = splited_filename[2]
+        (self.ex_num_str, self.data_num_str) = self.getNums(self.filename)
         self.ex_num = int(self.ex_num_str)
-        self.data_num_str = splited_filename[3]
         self.data_num = int(self.data_num_str)
+
+    # filenameからexample番号とdata番号を取り出す。
+    # 返り値はタプルで、0番目の要素がexample番号、1番目の要素がdata番号。
+    def getNums(self, filename):
+        re_name = re.compile("SumaC12_1c_([0-9]+)_([0-9]+).chi")
+        output = re_name.findall(filename)[0]
+        if len(output) != 2 or not output[0].isdigit() or not output[1].isdigit():
+            print("変な名前のファイルが見つかりました : " + filename)
+            exit(-1)
+        return output
 
 # フォルダ中の全exampleデータを読み込み
 examples = []
