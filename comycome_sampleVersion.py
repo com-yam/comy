@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# sample_rootフォルダ内の各chiファイルの内容が文字列のため，それを動かすためだけのプログラムがこれです．
 import sys
 import os
 import math
@@ -142,7 +143,7 @@ def SumaSuma(folder_path):
     for i,ex in enumerate(chis): # 各chiファイルについて（先頭からi=0,1,2,...番）
         col = i+1 # 列を一つ右にずらして（0番目のchiはBの列に，1番目はCの列に・・・）
         for row in range(START-1, len(ex.c_column)): # C5(START)～C末尾までを
-            sheet2.write(row+1, col, float(ex.c_column[row])) # 1行下の位置（row+1）に書き込む（C5は6行目に，C6は7行目に・・・）
+            sheet2.write(row+1, col, ex.c_column[row]) # 1行下の位置（row+1）に書き込む（C5は6行目に，C6は7行目に・・・）
     # コピー先のファイル名を生成
     out_name = os.path.abspath("SumaC12_1c_" + temp_value + ".xls")
     # このファイルに書き込む
